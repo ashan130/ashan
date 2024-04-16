@@ -1,0 +1,189 @@
+public class QulArray {
+    private static int[] array = new int[12];
+    private static int size = 0;
+
+    // Method to insert elemQulArrayents into the array
+    public static void insertArray(int[] elements) {
+        if (elements.length > array.length - size) {
+            System.out.println("Array is full. Cannot insert more elements.");
+            return;
+        }
+
+        for (int i = 0; i < elements.length; i++) {
+            array[size++] = elements[i];
+        }
+    }
+
+    // Method to search for an element in the array
+    public static int searchArray(int key) {
+        for (int i = 0; i < size; i++) {
+            if (array[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Method to delete an element from the array
+    public static boolean deleteArray(int key) {
+        int index = searchArray(key);
+        if (index != -1) {
+            for (int i = index; i < size - 1; i++) {
+                array[i] = array[i + 1];
+            }
+            size--;
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        int[] elementsToInsert = {17, 10, 84, 27, 84, 87, 33, 76, 11, 98};
+
+        // Inserting elements into the array
+        insertArray(elementsToInsert);
+
+        // Testing insertion
+        System.out.println("Array after insertion:");
+        printArray();
+
+        // Testing searching
+        int searchResult = searchArray(33);
+        if (searchResult != -1) {
+            System.out.println("Element 33 found at index: " + searchResult);
+        } else {
+            System.out.println("Element 33 not found in the array.");
+        }
+
+        // Testing deletion
+        boolean deleteResult = deleteArray(27);
+        if (deleteResult) {
+            System.out.println("Element 27 deleted successfully.");
+        } else {
+            System.out.println("Element 27 not found in the array. Deletion failed.");
+        }
+
+        // Testing deletion again
+        deleteResult = deleteArray(27);
+        if (deleteResult) {
+            System.out.println("Element 27 deleted successfully.");
+        } else {
+            System.out.println("Element 27 not found in the array. Deletion failed.");
+        }
+    }
+
+    // Method to print the array
+    private static void printArray() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+
+
+//=========================================end=======================================
+
+public class QueueDS{
+     int maxSize;
+    private int[] queueArray;
+    private int front;
+    private int rear;
+    private int nItems;
+
+    public QueueDS(int size) {
+        maxSize = size;
+        queueArray = new int[maxSize];
+        front = 0;
+        rear = -1;
+        nItems = 0;
+    }
+
+    public boolean isFull() {
+        return (nItems == maxSize);
+    }
+
+    public boolean isEmpty() {
+        return (nItems == 0);
+    }
+
+    public void enQueue(int item) {
+        if (isFull()) {
+            System.out.println("Queue is full. Cannot enqueue.");
+            return;
+        }
+        rear = (rear + 1) % maxSize;
+        queueArray[rear] = item;
+        nItems++;
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty. Cannot peek.");
+            return -1;
+        }
+        return queueArray[front];
+    }
+
+    public int deQueue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty. Cannot dequeue.");
+            return -1;
+        }
+        int removedItem = queueArray[front];
+        front = (front + 1) % maxSize;
+        nItems--;
+        return removedItem;
+    }
+
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        System.out.print("Queue: ");
+        int i = front;
+        while (i != rear) {
+            System.out.print(queueArray[i] + " ");
+            i = (i + 1) % maxSize;
+        }
+        System.out.println(queueArray[rear]);
+    }
+
+    public static void main(String[] args) {
+        QueueDS queue = new QueueDS(8);
+
+        // Enqueue
+        queue.enQueue(23);
+        queue.enQueue(52);
+        queue.enQueue(41);
+        queue.enQueue(12);
+
+        // Peek
+        System.out.println("Peek: " + queue.peek());
+
+        // Dequeue
+        int dequeuedItem = queue.deQueue();
+        System.out.println("Dequeued item: " + dequeuedItem);
+
+        // Display
+        queue.display();
+
+        // Dequeue front element
+        int frontItem = queue.deQueue();
+        System.out.println("Front item dequeued: " + frontItem);
+
+        // Display
+        queue.display();
+
+        // Enqueue
+        queue.enQueue(25);
+
+        // Display
+        queue.display();
+    }
+}
+
+
+
